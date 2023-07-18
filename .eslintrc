@@ -5,19 +5,24 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "rules": {
     "no-unused-vars": "error",
-    "no-console": "error",
-    "no-undefined": "error",
+    "prefer-const": "error",
     "no-unused-expressions": "error",
-    "no-unreachable": "error",
-    "consistent-type-definitions": ["error", "type"]
+    "no-undef": "error",
+    "no-console": "warn",
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"]
   },
-
   "env": {
     "browser": true,
     "es2021": true
+  },
+  "globals": {
+    "process": "readonly"
   }
 }

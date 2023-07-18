@@ -1,20 +1,29 @@
-import express, { Application, Request, Response } from 'express'
-import cors from 'cors'
-import usersRouter from './app/modules/users/user.route'
+import express, { Application } from 'express';
+import cors from 'cors';
+import { logger } from './shared/logger';
+import globalErrorHandler from './app/modules/users/middlewares/globalErrorHandlars';
+import { userRoutes } from './app/modules/users/user.route';
+// import { promises } from 'winston-daily-rotate-file'
 
-const app: Application = express()
+const app: Application = express();
 
-app.use(cors())
+app.use(cors());
 
 //perser
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1/users', usersRouter)
+// Application routes
+
+logger.info(app.get('env'));
+app.use('/api/v1/users', userRoutes);
 
 // testing
-app.get('/', (req: Request, res: Response) => {
-  res.send('University Management Start Successfully')
-})
+app.get('/', async () => {
+  throw new Error('Testing error logger');
+});
 
-export default app
+// global error handler
+app.use(globalErrorHandler);
+
+export default app;
